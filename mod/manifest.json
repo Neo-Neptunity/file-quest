@@ -1,0 +1,157 @@
+{
+  "id": "neo.file-quest",
+  "name": "ファイル・クエスト",
+  "version": "1.4.0",
+  "apiVersion": 1,
+  "entry": "index.js",
+  "uses": [
+    "size",
+    "modified",
+    "search",
+    "fileInfo",
+    "links",
+    "recent",
+    "quickAccess",
+    "collections"
+  ],
+  "location": "none",
+  "description": "長く使われていないファイルと戦う、ターン制のRPG。倒した分は「回収待ち」にたまり、町の回収所で1回だけ本体の確認を通してからごみ箱へ送ります。通信（任意）：Claude API。送るのはファイル名・拡張子・サイズ・未使用の期間だけで、ファイルの中身は読まず、送りません",
+  "network": [
+    "https://api.anthropic.com"
+  ],
+  "settings": [
+    {
+      "key": "staleDays",
+      "label": "討伐対象にする未使用の日数",
+      "type": "number",
+      "default": 730,
+      "min": 30,
+      "max": 3650,
+      "step": 30
+    },
+    {
+      "key": "useAccessTime",
+      "label": "アクセス日時も見る（同期直後は除く）",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "maxCount",
+      "label": "冒険の地の上限：古いファイルの数",
+      "type": "number",
+      "default": 600,
+      "min": 50,
+      "max": 3000,
+      "step": 50
+    },
+    {
+      "key": "minCount",
+      "label": "冒険の地の下限：古いファイルの数",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 1000,
+      "step": 5
+    },
+    {
+      "key": "minMB",
+      "label": "冒険の地の下限：古いファイルの合計MB",
+      "type": "number",
+      "default": 200,
+      "min": 0,
+      "max": 100000,
+      "step": 50
+    },
+    {
+      "key": "encounter",
+      "label": "敵の出やすさ",
+      "type": "choice",
+      "default": "normal",
+      "options": [
+        {
+          "value": "low",
+          "label": "少なめ"
+        },
+        {
+          "value": "normal",
+          "label": "ふつう"
+        },
+        {
+          "value": "high",
+          "label": "多め"
+        }
+      ]
+    },
+    {
+      "key": "autoParty",
+      "label": "仲間の操作",
+      "type": "choice",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "おまかせ"
+        },
+        {
+          "value": "manual",
+          "label": "自分で選ぶ"
+        }
+      ]
+    },
+    {
+      "key": "dodge",
+      "label": "戦闘で 敵のこうげきを 弾よけで よける（Escでとばせる）",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "sound",
+      "label": "効果音を鳴らす",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "debug",
+      "label": "デバッグ機能を使う（進行度のリセット）",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "llm",
+      "label": "AIでセリフ・鑑定・依頼・物語を作る（ファイル名を送ります）",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "appraiseFolder",
+      "label": "鑑定でフォルダ名も送る",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "model",
+      "label": "AIのモデル",
+      "type": "choice",
+      "default": "claude-haiku-5-5",
+      "options": [
+        {
+          "value": "claude-haiku-5-5",
+          "label": "Haiku 5.5（速い・安い）"
+        },
+        {
+          "value": "claude-sonnet-5-5",
+          "label": "Sonnet 5.5（文章が上手）"
+        }
+      ]
+    },
+    {
+      "key": "apiKey",
+      "label": "Anthropic の API キー",
+      "type": "secret",
+      "send": {
+        "origin": "https://api.anthropic.com",
+        "header": "x-api-key"
+      }
+    }
+  ]
+}
